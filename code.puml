@@ -1,0 +1,66 @@
+@startuml
+title Resource Booking System – Component Diagram
+
+package "Resource Booking System" {
+
+  component UI
+  interface I_UI
+  UI - I_UI
+
+  component API
+  interface I_API
+  API - I_API
+  API ..> I_UI
+
+  component "Auth Service" as Auth
+  interface I_Auth
+  Auth - I_Auth
+  API ..> I_Auth
+
+  component "Booking Service" as Booking
+  interface I_Booking
+  Booking - I_Booking
+  API ..> I_Booking
+
+  component "Payment Service" as Pay
+  interface I_Pay
+  Pay - I_Pay
+  API ..> I_Pay
+
+  component "Notification Service" as Notify
+  interface I_Notify
+  Notify - I_Notify
+  Booking ..> I_Notify
+
+  component Repository
+  interface I_Repo
+  Repository - I_Repo
+  Booking ..> I_Repo
+
+  database DB
+  interface I_DB
+  DB - I_DB
+  Repository ..> I_DB
+}
+
+component "OAuth Provider" as OAuth
+interface I_OAuth
+OAuth - I_OAuth
+API ..> I_OAuth
+
+component "Payment Provider" as PayExt
+interface I_PaymentAPI
+PayExt - I_PaymentAPI
+Pay ..> I_PaymentAPI
+
+component "SMS Gateway" as SMS
+interface I_SMS
+SMS - I_SMS
+Notify ..> I_SMS
+
+component "External Inventory API" as Inv
+interface I_Inv
+Inv - I_Inv
+Booking ..> I_Inv
+
+@enduml
